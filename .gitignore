@@ -1,0 +1,21 @@
+# Root
+.env
+.DS_Store
+*.log
+
+# Frontend (Vite/React)
+haiti-virtual-mailbox-frontend/node_modules/
+haiti-virtual-mailbox-frontend/dist/
+haiti-virtual-mailbox-frontend/.env
+
+# Backend (Node/Express)
+server/node_modules/
+server/dist/
+server/.env
+
+# Editor + Cache
+.vscode/
+*.tsbuildinfo
+
+# Uploads (if using local storage)
+uploads/
