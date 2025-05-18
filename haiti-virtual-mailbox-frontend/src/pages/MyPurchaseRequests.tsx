@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import "../styles/MyPurchaseRequests.css";
 import ReadMore from "../components/ReadMore";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next"; // ✅
+import { useTranslation } from "react-i18next";
 
 interface UserRequest {
   _id: string;
@@ -23,7 +23,7 @@ interface UserRequest {
 const MyPurchaseRequests = () => {
   const { user } = useAuth();
   const [requests, setRequests] = useState<UserRequest[]>([]);
-  const { t } = useTranslation(); // ✅
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchMyRequests = async () => {
@@ -82,10 +82,7 @@ const MyPurchaseRequests = () => {
 
     try {
       await api.patch(`/purchase-requests/${id}/soft-delete`);
-
-      // 🔥 Filter out deleted item from UI
       setRequests((prev) => prev.filter((r) => r._id !== id));
-
       toast.success("Request deleted successfully");
     } catch (err) {
       console.error("Delete failed", err);
@@ -215,7 +212,7 @@ const MyPurchaseRequests = () => {
                 <p>
                   <strong>📷 Screenshot:</strong>{" "}
                   <a
-                    href={`http://localhost:5000${r.screenshotUrl}`}
+                    href={`${import.meta.env.VITE_API_URL}${r.screenshotUrl}`}
                     target="_blank"
                     rel="noreferrer"
                   >

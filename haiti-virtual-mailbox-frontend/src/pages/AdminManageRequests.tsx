@@ -9,13 +9,11 @@ interface Request {
   estimatedPrice: number;
   quantity: number;
   notes?: string;
-  referenceNumber?: string; // ✅ Add this
-
+  referenceNumber?: string;
   screenshotUrl?: string;
   receiptUrl?: string;
   status: string;
   createdAt?: string;
-
   userId: {
     name: string;
     email: string;
@@ -261,7 +259,7 @@ const RequestTable = ({
             <td>
               {r.receiptUrl ? (
                 <a
-                  href={`http://localhost:5000${r.receiptUrl}`}
+                  href={`${import.meta.env.VITE_API_URL}${r.receiptUrl}`}
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -274,7 +272,7 @@ const RequestTable = ({
             <td>
               {r.screenshotUrl ? (
                 <a
-                  href={`http://localhost:5000${r.screenshotUrl}`}
+                  href={`${import.meta.env.VITE_API_URL}${r.screenshotUrl}`}
                   target="_blank"
                   rel="noreferrer"
                 >

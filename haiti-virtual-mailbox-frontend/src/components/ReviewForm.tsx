@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useTranslation } from "react-i18next"; // ✅
+import { useTranslation } from "react-i18next";
 import "../styles/ReviewForm.css";
 
 interface ReviewFormProps {
@@ -9,26 +9,23 @@ interface ReviewFormProps {
 }
 
 const ReviewForm = ({ packageId, onSubmitted }: ReviewFormProps) => {
-  const { t } = useTranslation(); // ✅
+  const { t } = useTranslation();
   const [rating, setRating] = useState<number>(5);
   const [review, setReview] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("📦 Token being sent:", localStorage.getItem("haitiUserToken"));
+    const apiBase = import.meta.env.VITE_API_URL;
 
     try {
-      const res = await fetch(
-        `http://localhost:5000/api/packages/${packageId}/review`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("haitiUserToken")}`,
-          },
-          body: JSON.stringify({ rating, review }),
-        }
-      );
+      const res = await fetch(`${apiBase}/api/packages/${packageId}/review`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("haitiUserToken")}`,
+        },
+        body: JSON.stringify({ rating, review }),
+      });
 
       if (!res.ok) {
         const data = await res.json();

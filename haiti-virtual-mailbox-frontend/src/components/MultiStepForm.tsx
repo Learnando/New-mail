@@ -10,12 +10,26 @@ import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import api from "../services/api";
 
+interface FormDataType {
+  customerName: string;
+  whatsapp: string;
+  sender: string;
+  description: string;
+  price: string;
+  shipping: string;
+  delivery: string;
+  note: string;
+  screenshot: File | null;
+  creditsToUse: string;
+  [key: string]: string | File | null;
+}
+
 const MultiStepForm = () => {
   const { user } = useAuth();
   const [step, setStep] = useState(1);
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormDataType>({
     customerName: user?.name || "",
     whatsapp: "",
     sender: "",
@@ -24,22 +38,22 @@ const MultiStepForm = () => {
     shipping: "air",
     delivery: "pickup",
     note: "",
-    screenshot: null as File | null,
-    creditsToUse: "", // ✅ Add credits field
+    screenshot: null,
+    creditsToUse: "",
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
-
     if (name === "price") {
       const numericValue = value.replace(/,/g, "").replace(/[^\d.]/g, "");
       if (numericValue === "") {
         setFormData((prev) => ({ ...prev, [name]: "" }));
         return;
       }
-
       const parts = numericValue.split(".");
       const integerPart = parts[0];
       const decimalPart = parts[1] || "";
@@ -50,7 +64,6 @@ const MultiStepForm = () => {
         decimalPart.length > 0
           ? `${formattedInteger}.${decimalPart.slice(0, 2)}`
           : formattedInteger;
-
       setFormData((prev) => ({ ...prev, [name]: formatted }));
       return;
     }
@@ -68,19 +81,16 @@ const MultiStepForm = () => {
       toast.error("📞 " + t("error.phoneRequired"));
       return;
     }
-
     if (step === 2) {
       if (!formData.description.trim()) {
         toast.error("🛍️ " + t("error.descriptionRequired"));
         return;
       }
-
       const rawPrice = formData.price.replace(/,/g, "");
       if (!rawPrice || isNaN(Number(rawPrice))) {
         toast.error("💵 " + t("error.priceRequired"));
         return;
       }
-
       if (
         formData.creditsToUse &&
         (isNaN(Number(formData.creditsToUse)) ||
@@ -90,7 +100,6 @@ const MultiStepForm = () => {
         return;
       }
     }
-
     if (step < 4) {
       setStep((prev) => prev + 1);
     }
@@ -102,7 +111,6 @@ const MultiStepForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.screenshot) {
       toast.error("📸 " + t("error.screenshotRequired"));
       return;
@@ -110,13 +118,13 @@ const MultiStepForm = () => {
 
     const data = new FormData();
     for (const key in formData) {
-      let value = formData[key as keyof typeof formData];
+      let value = formData[key];
       if (value !== null) {
         if (key === "price" && typeof value === "string") {
           value = value.replace(/,/g, "");
         }
         if (key === "creditsToUse" && value === "") {
-          value = "0"; // default to 0
+          value = "0";
         }
         data.append(key, value as any);
       }
@@ -130,7 +138,6 @@ const MultiStepForm = () => {
       const res = await api.post("/packages", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       console.log("📦 Package submitted:", res.data);
       toast.success("✅ " + t("submit.success"));
 
@@ -156,7 +163,6 @@ const MultiStepForm = () => {
   return (
     <div className="multi-step-form">
       <ProgressBar currentStep={step} />
-
       {step === 1 && (
         <Step1ContactInfo formData={formData} onChange={handleChange} />
       )}
@@ -170,8 +176,6 @@ const MultiStepForm = () => {
       {step === 3 && (
         <Step3ShippingDelivery formData={formData} onChange={handleChange} />
       )}
-
-      {/* ✅ Only wrap final step in <form onSubmit={handleSubmit}> */}
       {step === 4 && (
         <form onSubmit={handleSubmit}>
           <Step4ConfirmSubmit
@@ -186,8 +190,6 @@ const MultiStepForm = () => {
           </div>
         </form>
       )}
-
-      {/* ✅ Buttons for steps 1–3 go outside form */}
       {step < 4 && (
         <div className="navigation-buttons">
           {step > 1 && (

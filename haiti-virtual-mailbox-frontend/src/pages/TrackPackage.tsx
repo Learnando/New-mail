@@ -4,7 +4,7 @@ import { fetchUserPackages } from "../services/packageService";
 import PackageProgress from "../components/PackageProgress";
 import "../styles/TrackPackage.css";
 import ReadMore from "../components/ReadMore";
-import { useTranslation } from "react-i18next"; // ✅
+import { useTranslation } from "react-i18next";
 
 interface Package {
   _id: string;
@@ -20,7 +20,7 @@ const TrackPackage = () => {
   const { user } = useAuth();
   const [packages, setPackages] = useState<Package[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const { t } = useTranslation(); // ✅
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -48,7 +48,9 @@ const TrackPackage = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/packages/${packageId}/upload-receipt`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/packages/${packageId}/upload-receipt`,
         {
           method: "PATCH",
           body: formData,

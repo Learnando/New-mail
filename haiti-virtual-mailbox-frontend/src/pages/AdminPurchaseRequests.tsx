@@ -115,7 +115,9 @@ const AdminPurchaseRequests = () => {
                 <td>
                   {req.screenshotUrl ? (
                     <a
-                      href={`http://localhost:5000${req.screenshotUrl}`}
+                      href={`${import.meta.env.VITE_API_URL}${
+                        req.screenshotUrl
+                      }`}
                       target="_blank"
                       rel="noreferrer"
                     >

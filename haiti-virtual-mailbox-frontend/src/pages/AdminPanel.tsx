@@ -225,7 +225,7 @@ const AdminPanel = () => {
                 <td>
                   {pkg.receiptUrl ? (
                     <a
-                      href={`http://localhost:5000${pkg.receiptUrl}`}
+                      href={`${import.meta.env.VITE_API_URL}${pkg.receiptUrl}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="receipt-link"
