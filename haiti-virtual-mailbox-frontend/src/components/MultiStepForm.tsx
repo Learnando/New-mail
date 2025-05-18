@@ -8,6 +8,7 @@ import "../styles/MultiStepForm.css";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import api from "../services/api";
 
 const MultiStepForm = () => {
   const { user } = useAuth();
@@ -126,13 +127,8 @@ const MultiStepForm = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/packages", {
-        method: "POST",
-        body: data,
-      });
-
-      const result = await res.json();
-      console.log("📦 Package submitted:", result);
+      const res = await api.post("/packages", data);
+      console.log("📦 Package submitted:", res.data);
       toast.success("✅ " + t("submit.success"));
 
       setFormData({
