@@ -1,7 +1,9 @@
 {
+  "compilerOptions": {
+    "moduleResolution": "bundler", // ✅ change this
+    "resolveJsonModule": true, // ✅ allowed now
+    "jsx": "react-jsx"
+  },
   "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "./tsconfig.app.json" }]
 }

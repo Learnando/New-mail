@@ -1,0 +1,7 @@
+import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+import { useTranslation } from "react-i18next"; // ✅
+const Step3ShippingDelivery = ({ formData, onChange }) => {
+    const { t } = useTranslation(); // ✅
+    return (_jsxs("div", { className: "step-container", children: [_jsxs("h3", { children: ["\u2708\uFE0F ", t("step3.title")] }), _jsxs("div", { className: "form-group", children: [_jsx("h4", { children: t("step3.shippingLabel") }), _jsxs("div", { className: "radio-group", children: [_jsxs("label", { children: [_jsx("input", { type: "radio", name: "shipping", value: "air", checked: formData.shipping === "air", onChange: onChange }), "\u2708\uFE0F ", t("step3.air")] }), _jsxs("label", { children: [_jsx("input", { type: "radio", name: "shipping", value: "sea", checked: formData.shipping === "sea", onChange: onChange }), "\uD83D\uDEA2 ", t("step3.sea")] })] })] }), _jsxs("div", { className: "form-group", children: [_jsx("h4", { children: t("step3.deliveryLabel") }), _jsxs("div", { className: "radio-group", children: [_jsxs("label", { children: [_jsx("input", { type: "radio", name: "delivery", value: "pickup", checked: formData.delivery === "pickup", onChange: onChange }), "\uD83C\uDFE2 ", t("step3.pickup")] }), _jsxs("label", { children: [_jsx("input", { type: "radio", name: "delivery", value: "home", checked: formData.delivery === "home", onChange: onChange }), "\uD83C\uDFE0 ", t("step3.home")] })] })] })] }));
+};
+export default Step3ShippingDelivery;

@@ -1,0 +1,11 @@
+import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
+import "../styles/Step4ConfirmSubmit.css";
+import ReadMore from "../components/ReadMore";
+import { useTranslation } from "react-i18next"; // ✅
+const Step4ConfirmSubmit = ({ formData, onFileChange }) => {
+    const { t } = useTranslation(); // ✅
+    return (_jsxs("div", { className: "step-container", children: [_jsxs("h3", { children: ["\uD83D\uDCCB ", t("step4.title")] }), _jsxs("div", { className: "form-review", children: [_jsxs("p", { children: [_jsxs("strong", { children: ["\uD83D\uDCE6 ", t("step4.customerName"), ":"] }), " ", formData.customerName] }), _jsxs("p", { children: [_jsxs("strong", { children: ["\uD83D\uDCDE ", t("step4.whatsapp"), ":"] }), " ", formData.whatsapp] }), _jsxs("div", { className: "line-item", children: [_jsxs("strong", { children: ["\uD83D\uDECD\uFE0F ", t("step4.description"), ":"] }), _jsx(ReadMore, { text: formData.description, maxLength: 100 })] }), _jsxs("p", { children: [_jsxs("strong", { children: ["\uD83D\uDCB5 ", t("step4.price"), ":"] }), " $", formData.price] }), _jsxs("p", { children: [_jsxs("strong", { children: ["\u2708\uFE0F ", t("step4.shipping"), ":"] }), " ", formData.shipping] }), _jsxs("p", { children: [_jsxs("strong", { children: ["\uD83D\uDE9A ", t("step4.delivery"), ":"] }), " ", formData.delivery] }), _jsxs("p", { children: ["\uD83D\uDCB3 ", _jsxs("strong", { children: [t("step2.creditsUsed"), ":"] }), " ", formData.creditsToUse || "0"] }), _jsxs("p", { children: ["\uD83D\uDCE6 ", _jsxs("strong", { children: [t("step2.senderLabel"), ":"] }), " ", formData.sender] }), _jsxs("p", { children: [_jsxs("strong", { children: ["\uD83D\uDCF8 ", t("step4.screenshot"), ":"] }), " ", formData.screenshot
+                                ? formData.screenshot.name
+                                : t("step4.noScreenshot")] })] }), _jsxs("div", { className: "form-group", children: [_jsx("h4", { children: t("step4.updateScreenshot") }), _jsx("input", { type: "file", name: "screenshot", accept: "image/*", onChange: onFileChange })] }), _jsx("div", { style: { marginTop: "2rem", textAlign: "center" }, children: _jsxs("button", { type: "submit", className: "submit-btn", children: ["\uD83D\uDE80 ", t("step4.submit")] }) })] }));
+};
+export default Step4ConfirmSubmit;
