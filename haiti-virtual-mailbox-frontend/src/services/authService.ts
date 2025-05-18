@@ -9,7 +9,7 @@ export const register = async (
   password: string,
   ref?: string | null
 ) => {
-  const res = await api.post("/auth/register", {
+  const res = await api.post("/users/register", {
     name,
     email,
     password,
