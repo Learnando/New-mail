@@ -1,10 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, //
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
-// ✅ Interceptor to automatically attach Authorization header
 api.interceptors.request.use((config) => {
   const userInfo = localStorage.getItem("haitiUser");
   if (userInfo && config.headers) {
