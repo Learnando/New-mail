@@ -127,7 +127,10 @@ const MultiStepForm = () => {
     }
 
     try {
-      const res = await api.post("/packages", data);
+      const res = await api.post("/packages", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       console.log("📦 Package submitted:", res.data);
       toast.success("✅ " + t("submit.success"));
 
