@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // ✅ Make sure it's "/api" only, no extra slashes
+  baseURL: import.meta.env.VITE_API_URL || "/api", // ✅ use env var in production
 });
 
 // ✅ Interceptor to automatically attach Authorization header
