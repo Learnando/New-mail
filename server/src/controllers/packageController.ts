@@ -30,6 +30,9 @@ export const createPackage = async (
   next: NextFunction
 ): Promise<any> => {
   try {
+    console.log("🟨 req.body:", req.body); // Log form fields
+    console.log("🟦 req.file:", req.file);
+
     const {
       customerName,
       whatsapp,
