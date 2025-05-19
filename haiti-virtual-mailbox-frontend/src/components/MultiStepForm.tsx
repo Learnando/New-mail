@@ -111,14 +111,20 @@ const MultiStepForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.screenshot) {
       toast.error("📸 " + t("error.screenshotRequired"));
       return;
     }
 
     const data = new FormData();
+
+    // Append all string fields
     for (const key in formData) {
       let value = formData[key];
+
+      if (key === "screenshot") continue; // Skip screenshot in loop, handle separately
+
       if (value !== null) {
         if (key === "price" && typeof value === "string") {
           value = value.replace(/,/g, "");
@@ -129,6 +135,9 @@ const MultiStepForm = () => {
         data.append(key, value as any);
       }
     }
+
+    // 👇 Explicitly append file field with correct key
+    data.append("screenshot", formData.screenshot);
 
     if (user?._id) {
       data.append("userId", user._id);
